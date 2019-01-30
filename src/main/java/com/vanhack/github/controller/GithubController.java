@@ -5,9 +5,8 @@ import com.vanhack.github.domain.Event;
 import com.vanhack.github.service.ActorService;
 import com.vanhack.github.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,8 +28,26 @@ public class GithubController {
         return actorService.findAll();
     }
 
+    @GetMapping("/events/actors/{actorId}")
+    public List<Event> findByActor(@PathVariable String actorId) {
+        return eventService.findEventsByActor(actorService.findById(actorId));
+    }
+
     @GetMapping("/events")
     public List<Event> findAllEvents() {
         return eventService.findAll();
     }
+
+    @PostMapping("/events")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Event createEvent(@RequestBody Event event) {
+        return eventService.save(event);
+    }
+
+    @DeleteMapping("/events")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAllEvents() {
+        eventService.deleteAll();
+    }
+
 }
