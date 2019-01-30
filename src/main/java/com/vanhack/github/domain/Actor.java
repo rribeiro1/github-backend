@@ -18,10 +18,14 @@ public class Actor {
 
     protected Actor() {}
 
-    public Actor(String id, String name, String avatarUrl) {
+    private Actor(String id, String name, String avatarUrl) {
         this.id = id;
         this.name = name;
         this.avatarUrl = avatarUrl;
+    }
+
+    public static Actor of(String id, String name, String avatarUrl) {
+        return new Actor(id, name, avatarUrl);
     }
 
     public String getId() {

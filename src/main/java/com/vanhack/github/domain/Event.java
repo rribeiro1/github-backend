@@ -11,22 +11,29 @@ public class Event {
 
     @Id
     private Long id;
+
     @Column
     private String type;
+
     @OneToOne
     private Actor actor;
+
+    @OneToOne
+    private Repo repo;
+
     @Column
     private Timestamp createdAt;
 
-    private Event(Long id, String type, Actor actor, Timestamp createdAt) {
+    private Event(Long id, String type, Actor actor, Repo repo, Timestamp createdAt) {
         this.id = id;
         this.type = type;
         this.actor = actor;
+        this.repo = repo;
         this.createdAt = createdAt;
     }
 
-    public static Event of(Long id, String type, Actor actor, Timestamp createdAt) {
-        return new Event(id, type, actor, createdAt);
+    public static Event of(Long id, String type, Actor actor, Repo repo, Timestamp createdAt) {
+        return new Event(id, type, actor, repo, createdAt);
     }
 
     protected Event() { }
@@ -53,6 +60,14 @@ public class Event {
 
     public void setActor(Actor actor) {
         this.actor = actor;
+    }
+
+    public Repo getRepo() {
+        return repo;
+    }
+
+    public void setRepo(Repo repo) {
+        this.repo = repo;
     }
 
     public Timestamp getCreatedAt() {
