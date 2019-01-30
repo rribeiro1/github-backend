@@ -1,4 +1,4 @@
-package com.vanhack.github.exception;
+package com.vanhack.github.controller.exception;
 
 public class ResourceNotFoundException extends RuntimeException {
 

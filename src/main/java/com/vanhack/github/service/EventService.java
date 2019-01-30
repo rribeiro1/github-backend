@@ -2,7 +2,7 @@ package com.vanhack.github.service;
 
 import com.vanhack.github.domain.Actor;
 import com.vanhack.github.domain.Event;
-import com.vanhack.github.exception.ResourceNotFoundException;
+import com.vanhack.github.controller.exception.ResourceNotFoundException;
 import com.vanhack.github.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

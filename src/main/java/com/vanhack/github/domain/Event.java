@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 public class Event {
 
     @Id
-    private String id;
+    private Long id;
     @Column
     private String type;
     @OneToOne
@@ -18,7 +18,7 @@ public class Event {
     @Column
     private Timestamp createdAt;
 
-    public Event(String id, String type, Actor actor, Timestamp createdAt) {
+    public Event(Long id, String type, Actor actor, Timestamp createdAt) {
         this.id = id;
         this.type = type;
         this.actor = actor;
@@ -28,11 +28,11 @@ public class Event {
     public Event() {
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
