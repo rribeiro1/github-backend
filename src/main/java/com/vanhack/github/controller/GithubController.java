@@ -28,6 +28,11 @@ public class GithubController {
         return actorService.findAll();
     }
 
+    @PatchMapping("/actors")
+    public Actor updateActor(@RequestBody Actor actor) {
+        return actorService.update(actor);
+    }
+
     @GetMapping("/events/actors/{actorId}")
     public List<Event> findByActor(@PathVariable String actorId) {
         return eventService.findEventsByActor(actorService.findById(actorId));

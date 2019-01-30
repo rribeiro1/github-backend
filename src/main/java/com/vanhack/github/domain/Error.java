@@ -8,10 +8,22 @@ public class Error {
     private String details;
     private Timestamp timestamp;
 
-    public Error(Builder builder) {
+    private Error(Builder builder) {
         this.message = builder.message;
         this.details = builder.details;
         this.timestamp = builder.timestamp;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
     }
 
     protected Error() {}

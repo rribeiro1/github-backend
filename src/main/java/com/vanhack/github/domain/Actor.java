@@ -13,11 +13,15 @@ public class Actor {
     @Column
     private String name;
 
-    public Actor() {}
+    @Column
+    private String avatarUrl;
 
-    public Actor(String id, String name) {
+    protected Actor() {}
+
+    public Actor(String id, String name, String avatarUrl) {
         this.id = id;
         this.name = name;
+        this.avatarUrl = avatarUrl;
     }
 
     public String getId() {
@@ -34,5 +38,13 @@ public class Actor {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 }

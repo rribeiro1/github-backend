@@ -18,15 +18,18 @@ public class Event {
     @Column
     private Timestamp createdAt;
 
-    public Event(Long id, String type, Actor actor, Timestamp createdAt) {
+    private Event(Long id, String type, Actor actor, Timestamp createdAt) {
         this.id = id;
         this.type = type;
         this.actor = actor;
         this.createdAt = createdAt;
     }
 
-    public Event() {
+    public static Event of(Long id, String type, Actor actor, Timestamp createdAt) {
+        return new Event(id, type, actor, createdAt);
     }
+
+    protected Event() { }
 
     public Long getId() {
         return id;
