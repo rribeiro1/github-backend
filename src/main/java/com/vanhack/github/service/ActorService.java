@@ -2,20 +2,26 @@ package com.vanhack.github.service;
 
 import com.vanhack.github.domain.Actor;
 import com.vanhack.github.controller.exception.ResourceNotFoundException;
+import com.vanhack.github.domain.Event;
 import com.vanhack.github.repository.ActorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ActorService {
 
     private ActorRepository actorRepository;
+    private EventService eventService;
 
     @Autowired
-    public ActorService(ActorRepository actorRepository) {
+    public ActorService(ActorRepository actorRepository, EventService eventService) {
         this.actorRepository = actorRepository;
+        this.eventService = eventService;
     }
 
     public Actor save(Actor actor) {
@@ -29,8 +35,22 @@ public class ActorService {
             throw new ResourceNotFoundException(String.format("Actor with ID '%s' does not exists", id));
     }
 
-    public List<Actor> findAll() {
-        return actorRepository.findAll();
+    public List<Actor> findActorsByEvents() {
+        List<Actor> actors = actorRepository.findAll();
+
+        for (Actor a: actors) {
+            List<Event> events = eventService.findEventsByActor(a);
+            a.setTotalEvents(events.size());
+            a.setLastEventTime(this.getLastEventTimestamp(events));
+        }
+
+        for (Actor a: actors) {
+            System.out.println(actors);
+        }
+
+        return actors.stream().sorted(Comparator.comparingInt(Actor::getTotalEvents).reversed()
+                .thenComparing(Actor::getName))
+                .collect(Collectors.toList());
     }
 
     public Actor update(Actor actor) {
@@ -40,6 +60,13 @@ public class ActorService {
                     actorRepo.getName()));
         }
         return actorRepository.save(actor);
+    }
+
+    private Timestamp getLastEventTimestamp(List<Event> events) {
+        return events.stream()
+                .sorted(Comparator.comparingLong(Event::getId).reversed())
+                .reduce((first, second) -> second).orElse(null)
+                .getCreatedAt();
     }
 
 }

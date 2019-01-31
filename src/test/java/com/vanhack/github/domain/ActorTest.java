@@ -11,7 +11,7 @@ public class ActorTest {
     @Test
     @DisplayName("Should Validated the Actor Domain")
     public void shouldReturnFields() {
-        Actor actorA = new Actor("rribeiro1", "Rafael", "http://avatar.com/rribeiro1");
+        Actor actorA = Actor.of("rribeiro1", "Rafael", "http://avatar.com/rribeiro1");
 
         Actor actorB = new Actor();
         actorB.setId("jussara12");

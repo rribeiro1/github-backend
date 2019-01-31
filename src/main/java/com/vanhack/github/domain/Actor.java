@@ -1,8 +1,11 @@
 package com.vanhack.github.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.sql.Timestamp;
 
 @Entity
 public class Actor {
@@ -15,6 +18,12 @@ public class Actor {
 
     @Column
     private String avatarUrl;
+
+    @JsonIgnore
+    private Integer totalEvents;
+
+    @JsonIgnore
+    private Timestamp lastEventTime;
 
     protected Actor() {}
 
@@ -50,5 +59,37 @@ public class Actor {
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
+    }
+
+    public Integer getTotalEvents() {
+        return totalEvents;
+    }
+
+    public void setTotalEvents(Integer totalEvents) {
+        this.totalEvents = totalEvents;
+    }
+
+    public Timestamp getLastEventTime() {
+        return lastEventTime;
+    }
+
+    public void setLastEventTime(Timestamp lastEventTime) {
+        this.lastEventTime = lastEventTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Actor{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                ", totalEvents=" + totalEvents +
+                ", lastEventTime=" + lastEventTime +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 }

@@ -5,6 +5,7 @@ import com.vanhack.github.domain.Event;
 import com.vanhack.github.domain.Repo;
 import com.vanhack.github.service.ActorService;
 import com.vanhack.github.service.EventService;
+import com.vanhack.github.service.RepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -22,6 +23,9 @@ public class Application implements CommandLineRunner {
 	@Autowired
 	private EventService eventService;
 
+	@Autowired
+	private RepoService repoService;
+
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
@@ -35,7 +39,7 @@ public class Application implements CommandLineRunner {
 
 		Actor rafael = Actor.of("rribeiro1", "Rafael Ribeiro", "http://avatar.com/rribeiro1");
 		Actor jussara = Actor.of("jussara12", "Jussara Cardoso", "http://avatar.com/jussara12");
-		Actor leornardo = Actor.of("leonardomso", "Leonardo Silva", "http://avatar.com/leonardomso");
+		Actor leornardo = Actor.of("leonardomso", "Aline Silva", "http://avatar.com/leonardomso");
 
 		Repo repo1 = Repo.of(Long.valueOf(1), "http://github/rribeiro1/vanhack-challenge");
 		Repo repo2 = Repo.of(Long.valueOf(2), "http://github/jussara12/test");
@@ -44,15 +48,16 @@ public class Application implements CommandLineRunner {
 		actorService.save(leornardo);
 		actorService.save(jussara);
 
+		repoService.save(repo1);
+		repoService.save(repo2);
+
 		eventService.save(Event.of(Long.valueOf(1), "push", rafael, repo1, t1));
-		eventService.save(Event.of(Long.valueOf(2), "commit", rafael, repo1, t2));
-		eventService.save(Event.of(Long.valueOf(3), "merge request", rafael, repo1, t3));
-		eventService.save(Event.of(Long.valueOf(4), "pull request", leornardo, repo1, Timestamp.from(Instant.now())));
-		eventService.save(Event.of(Long.valueOf(5), "pull request", leornardo, repo1, Timestamp.from(Instant.now())));
-		eventService.save(Event.of(Long.valueOf(6), "pull request", jussara, repo2, Timestamp.from(Instant.now())));
+		eventService.save(Event.of(Long.valueOf(2), "commit", rafael, repo1, t1));
+		eventService.save(Event.of(Long.valueOf(3), "merge request", rafael, repo1, t1));
+		eventService.save(Event.of(Long.valueOf(4), "pull request", leornardo, repo1, t2));
+		eventService.save(Event.of(Long.valueOf(5), "pull request", leornardo, repo1, t2));
+		eventService.save(Event.of(Long.valueOf(6), "pull request", jussara, repo2, t3));
 		eventService.save(Event.of(Long.valueOf(7), "pull request", jussara, repo2, Timestamp.from(Instant.now())));
-		eventService.save(Event.of(Long.valueOf(8), "commit", jussara, repo2, Timestamp.from(Instant.now())));
-		eventService.save(Event.of(Long.valueOf(9), "push", jussara, repo2, Timestamp.from(Instant.now())));
 	}
 }
 

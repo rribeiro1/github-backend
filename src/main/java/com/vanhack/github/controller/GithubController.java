@@ -24,8 +24,8 @@ public class GithubController {
     }
 
     @GetMapping("/actors")
-    public List<Actor> findAllActors() {
-        return actorService.findAll();
+    public List<Actor> findActorsByEvents() {
+        return actorService.findActorsByEvents();
     }
 
     @PatchMapping("/actors")
