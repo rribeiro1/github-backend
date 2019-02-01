@@ -5,12 +5,14 @@ import com.vanhack.github.controller.exception.ResourceNotFoundException;
 import com.vanhack.github.domain.Event;
 import com.vanhack.github.repository.ActorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ActorService {
@@ -44,13 +46,9 @@ public class ActorService {
             a.setLastEventTime(this.getLastEventTimestamp(events));
         }
 
-        for (Actor a: actors) {
-            System.out.println(actors);
-        }
+        Collections.sort(actors);
 
-        return actors.stream().sorted(Comparator.comparingInt(Actor::getTotalEvents).reversed()
-                .thenComparing(Actor::getName))
-                .collect(Collectors.toList());
+        return actors;
     }
 
     public Actor update(Actor actor) {

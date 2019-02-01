@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import java.sql.Timestamp;
 
 @Entity
-public class Actor {
+public class Actor implements Comparable<Actor> {
 
     @Id
     private String id;
@@ -91,5 +91,25 @@ public class Actor {
     @Override
     public boolean equals(Object obj) {
         return super.equals(obj);
+    }
+
+    @Override
+    public int compareTo(Actor o) {
+        if (this.getTotalEvents().equals(o.getTotalEvents())) {
+            if (this.getLastEventTime().before(o.getLastEventTime())) {
+                return -1;
+            } else {
+                if (this.getLastEventTime().after(o.getLastEventTime())) {
+                    return 1;
+                }
+            }
+        }
+        if (this.getTotalEvents() > o.getTotalEvents()) {
+            return -1;
+        }
+        if (this.getTotalEvents() < o.getTotalEvents()) {
+            return 1;
+        }
+        return 0;
     }
 }

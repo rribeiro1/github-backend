@@ -57,7 +57,8 @@ public class Application implements CommandLineRunner {
 		eventService.save(Event.of(Long.valueOf(4), "pull request", leornardo, repo1, t2));
 		eventService.save(Event.of(Long.valueOf(5), "pull request", leornardo, repo1, t2));
 		eventService.save(Event.of(Long.valueOf(6), "pull request", jussara, repo2, t3));
-		eventService.save(Event.of(Long.valueOf(7), "pull request", jussara, repo2, Timestamp.from(Instant.now())));
+		eventService.save(Event.of(Long.valueOf(7), "pull request", jussara, repo2, t3));
+		eventService.save(Event.of(Long.valueOf(8), "pull request", jussara, repo2, Timestamp.from(Instant.now())));
 	}
 }
 
