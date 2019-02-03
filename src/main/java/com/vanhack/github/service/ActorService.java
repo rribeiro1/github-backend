@@ -1,18 +1,16 @@
 package com.vanhack.github.service;
 
 import com.vanhack.github.domain.Actor;
-import com.vanhack.github.controller.exception.ResourceNotFoundException;
 import com.vanhack.github.domain.Event;
 import com.vanhack.github.repository.ActorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class ActorService {
@@ -30,11 +28,9 @@ public class ActorService {
         return actorRepository.save(actor);
     }
 
-    public Actor findById(String id) {
-        if (actorRepository.existsById(id))
-            return actorRepository.findById(id).get();
-        else
-            throw new ResourceNotFoundException(String.format("Actor with ID '%s' does not exists", id));
+    public Actor findById(String id) throws NoSuchElementException {
+        return actorRepository.findById(id).orElseThrow
+                (() -> new NoSuchElementException(String.format("Actor with ID '%s' does not exists", id)));
     }
 
     public List<Actor> findActorsByEvents() {
@@ -60,10 +56,11 @@ public class ActorService {
         return actorRepository.save(actor);
     }
 
-    private Timestamp getLastEventTimestamp(List<Event> events) {
+    private Timestamp getLastEventTimestamp(List<Event> events) throws NoSuchElementException{
         return events.stream()
                 .sorted(Comparator.comparingLong(Event::getId).reversed())
-                .reduce((first, second) -> second).orElse(null)
+                .reduce((first, second) -> second)
+                    .orElseThrow(() -> new NoSuchElementException("Error while processing..."))
                 .getCreatedAt();
     }
 

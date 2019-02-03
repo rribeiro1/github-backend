@@ -23,6 +23,11 @@ public class GithubController {
         this.eventService = eventService;
     }
 
+    @PostMapping("/actors")
+    public Actor saveActor(@RequestBody Actor actor) {
+        return actorService.save(actor);
+    }
+
     @GetMapping("/actors")
     public List<Actor> findActorsByEvents() {
         return actorService.findActorsByEvents();

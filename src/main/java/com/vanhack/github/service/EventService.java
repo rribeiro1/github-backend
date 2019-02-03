@@ -2,7 +2,6 @@ package com.vanhack.github.service;
 
 import com.vanhack.github.domain.Actor;
 import com.vanhack.github.domain.Event;
-import com.vanhack.github.controller.exception.ResourceNotFoundException;
 import com.vanhack.github.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,7 @@ public class EventService {
 
     public Event save(Event event) {
         if (eventRepository.existsById(event.getId())) {
-            throw new ResourceNotFoundException(String.format("Event %s already exists", event.getId()));
+            throw new RuntimeException(String.format("Event %s already exists", event.getId()));
         }
         return eventRepository.save(event);
     }
